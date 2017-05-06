@@ -1,0 +1,50 @@
+.mdl-card{
+  width: 30%;
+  margin: 100px auto 0 auto;
+}
+
+.mdl-card__title{
+  background-color: rgb(11, 237, 183);
+}
+
+.mdl-card__title-text{
+  font-weight: bold;
+}
+
+.mdl-button{
+  font-weight: bold;
+  background-color: rgba(86, 208, 235, 0.35);
+}
+
+.mdl-button:hover{
+  background-color:rgba(191, 227, 17, 0.32);
+}
+
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 20px;
+  height: 200px;
+  overflow: auto;
+}
+
+h5{
+  font-size: 14px;
+}
+
+a{
+  color: blue;
+}
+
+#description{
+  height: 100px;
+}
+
+#sign-info{
+  color: rgb(246, 6, 6);
+  font-size: 110%;
+}
+
+#demo-menu-lower-right{
+  margin-left: 60%;
+}

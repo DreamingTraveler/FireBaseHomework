@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+
+  <link rel="stylesheet" href="css/material.min.css">
+  <script src="js/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="js/jquery-3.2.1.min.js"></script>
+
+  <script src="js/script.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Chat Room</h2>
+      <!-- Right aligned menu below button -->
+      <button id="demo-menu-lower-right"
+              class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">more_vert</i>
+      </button>
+
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+          for="demo-menu-lower-right">
+        <li class="mdl-menu__item" id="update">Update Profile</li>
+        <li class="mdl-menu__item" id="logOut">Log out</li>
+      </ul>
+    </div>
+
+    <div class="mdl-card__supporting-text">
+      <ul id='messageList' class="example-chat-messages"></ul>
+
+
+    <form action="#">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="messageField">
+        <label class="mdl-textfield__label" for="sample1">Type a message...</label>
+      </div>
+    </form>
+
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="remove">Remove</button>
+
+    </div>
+  </div>
+
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Your Profile</h2>
+    </div>
+
+    <div class="mdl-card__supporting-text">
+      <img src="" class="demo-avatar">
+
+      <ul>
+        <li><strong>Name: </strong> <span id="profile-name"></span></li>
+        <li><strong>Email:</strong> <span id="profile-email"></span></li>
+        <li><strong>Occupation:</strong> <span id="profile-occupation"></span></li>
+        <li><strong>Age:</strong> <span id="profile-age"></span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
