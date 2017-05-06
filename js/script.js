@@ -130,11 +130,11 @@ $(document).ready(function(){
         userProfile[1] = occupation;
         userProfile[2] = age;
         userProfile[3] = description;
-        // console.log(userName,occupation,age);
-        // $profileName.html(userName);
-        // $profileEmail.html(currentUser.email);
-        // $profileOccupation.html(occupation);
-        // $profileAge.html(age);
+        console.log(userName,occupation,age);
+        $profileName.html(userName);
+        $profileEmail.html(currentUser.email);
+        $profileOccupation.html(occupation);
+        $profileAge.html(age);
         $img.attr("src", photoURL);
         // alert("Set profile success!!");
 
