@@ -15,7 +15,7 @@ $(document).ready(function(){
   var photoURL;
   var currentUser = firebase.auth().currentUser;
   var currentUserName = "";
-  var userProfile = [];
+
 
   const $email = $('#email');
   const $password = $('#password');
@@ -43,6 +43,7 @@ $(document).ready(function(){
   const $profileEmail = $('#profile-email');
   const $profileOccupation = $('#profile-occupation');
   const $profileAge = $('#profile-age');
+  const $profileDescription = $('#profile-description');
 
 
   var storageRef = firebase.storage().ref();
@@ -126,11 +127,7 @@ $(document).ready(function(){
           'age': age,
           'description': description
         });
-        userProfile[0] = userName;
-        userProfile[1] = occupation;
-        userProfile[2] = age;
-        userProfile[3] = description;
-        console.log(userName,occupation,age);
+
         $profileName.html(userName);
         $profileEmail.html(currentUser.email);
         $profileOccupation.html(occupation);
@@ -164,30 +161,42 @@ $(document).ready(function(){
 
   firebase.auth().onAuthStateChanged(function(currentUser){
     if(currentUser){
-      console.log(userProfile[0]);
+      console.log(currentUser);
       dbChatRoom.limitToLast(10).on('child_added', function (snapshot) {
         //GET DATA
 
         var data = snapshot.val();
         var username = data.user || "anonymous";
         var message = data.text;
+        var imageUrl = data.imageUrl;
+        var userProfile = [];
+        var dbUserInfo = firebase.database().ref('user/' + currentUser.uid);
+
+        dbUserInfo.on("value", function(snapshot){
+          var username = snapshot.val().username;
+          var occupation = snapshot.val().occupation;
+          var age = snapshot.val().age;
+          var description = snapshot.val().description;
+          $profileName.html(username);
+          $profileEmail.html(currentUser.email);
+          $profileOccupation.html(occupation);
+          $profileAge.html(age);
+          $profileDescription.html(description);
+          $img.attr("src",currentUser.photoURL);
 
         //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+
+        });
         var $messageElement = $("<li>");
+        var $image = $("<img>");
+        $image.attr("src", imageUrl);
         $messageElement.text(message).prepend(username + ":  ");
+        $messageElement.prepend($image);
 
         //ADD MESSAGE
         $messageList.append($messageElement);
-
-        $profileName.html(userProfile[0]);
-        $profileEmail.html(currentUser.email);
-        $profileOccupation.html(userProfile[1]);
-        $profileAge.html(userProfile[2]);
-        $img.attr("src",currentUser.photoURL);
-
-        //SCROLL TO BOTTOM OF MESSAGE LIST
-        // $messageList[0].scrollTop = $messageList[0].scrollHeight;
-      });//child_added callback
+        $messageList[0].scrollTop = $messageList[0].scrollHeight;
+      });
     }
   });
 
@@ -217,8 +226,9 @@ $(document).ready(function(){
         var message = $messageField.val();
         console.log(userName);
         console.log(message);
+        console.log(currentUser.photoURL);
 
-        dbChatRoom.push({user:userName, text:message});
+        dbChatRoom.push({user:userName, text:message, imageUrl:currentUser.photoURL});
         $messageField.val('');
       }
     }

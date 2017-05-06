@@ -19,7 +19,7 @@
 
 </head>
 <body>
-  <div class="mdl-card mdl-shadow--2dp">
+  <div class="mdl-card mdl-shadow--2dp chatroom">
     <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">Chat Room</h2>
       <!-- Right aligned menu below button -->
@@ -51,20 +51,25 @@
     </div>
   </div>
 
-  <div class="mdl-card mdl-shadow--2dp">
+  <div class="mdl-card mdl-shadow--2dp profile-card">
     <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">Your Profile</h2>
     </div>
 
-    <div class="mdl-card__supporting-text">
+    <div class="mdl-card__supporting-text" id="user-pic">
       <img src="" class="demo-avatar">
+    </div>
 
-      <ul>
+    <div class="mdl-card__supporting-text">
+
+      <ul class="user-profile">
         <li><strong>Name: </strong> <span id="profile-name"></span></li>
         <li><strong>Email:</strong> <span id="profile-email"></span></li>
         <li><strong>Occupation:</strong> <span id="profile-occupation"></span></li>
         <li><strong>Age:</strong> <span id="profile-age"></span></li>
+        <li><strong>Description:</strong> <span id="profile-description"></span></li>
       </ul>
+
     </div>
   </div>
 </div>
