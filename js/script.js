@@ -78,6 +78,7 @@ $(document).ready(function(){
     const promise = auth.createUserWithEmailAndPassword(email, password);
     promise.catch(function(e){
       console.log(e.message);
+      $signInfo.html(e.message);
     });
     promise.then(function(currentUser){
       // console.log("SignUp user is "+currentUser.email);
