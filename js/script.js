@@ -16,7 +16,6 @@ $(document).ready(function(){
   var currentUser = firebase.auth().currentUser;
   var currentUserName = "";
 
-
   const $email = $('#email');
   const $password = $('#password');
   const $btnSignUp = $('#btnSignUp');
@@ -67,7 +66,6 @@ $(document).ready(function(){
     });
   }
 
-    console.log("xxx");
     $file.change(handleFileSelect);
 
 
@@ -76,15 +74,15 @@ $(document).ready(function(){
     const password = $password.val();
     const auth = firebase.auth();
 
+
     const promise = auth.createUserWithEmailAndPassword(email, password);
     promise.catch(function(e){
       console.log(e.message);
     });
     promise.then(function(currentUser){
-      console.log("SignUp user is "+currentUser.email);
+      // console.log("SignUp user is "+currentUser.email);
       const dbUserid = dbUser.child(currentUser.uid);
       dbUserid.update({email:currentUser.email});
-      alert("Create Account Success!!")
       window.location.href = "./profile.html";
     });
   });
@@ -128,12 +126,7 @@ $(document).ready(function(){
           'description': description
         });
 
-        $profileName.html(userName);
-        $profileEmail.html(currentUser.email);
-        $profileOccupation.html(occupation);
-        $profileAge.html(age);
-        $img.attr("src", photoURL);
-        // alert("Set profile success!!");
+        findData(currentUser);
 
         if(choice === "set"){
           window.location.href = "./index.html";
@@ -142,7 +135,6 @@ $(document).ready(function(){
           alert("Update profile success!!");
           window.location.href = "./chatroom.html";
         }
-
       }
     });
   }
@@ -159,9 +151,28 @@ $(document).ready(function(){
     updateOrSetProfile("update");
   });
 
+  function findData(currentUser){
+    var dbUserInfo = firebase.database().ref('user/' + currentUser.uid);
+
+    dbUserInfo.on("value", function(snapshot){
+      var username = snapshot.val().username;
+      var occupation = snapshot.val().occupation;
+      var age = snapshot.val().age;
+      var description = snapshot.val().description;
+
+      $profileName.html(username);
+      $profileEmail.html(currentUser.email);
+      $profileOccupation.html(occupation);
+      $profileAge.html(age);
+      $profileDescription.html(description);
+      $img.attr("src",currentUser.photoURL);
+      //$img.attr("src", photoURL);
+    });
+  }
+
   firebase.auth().onAuthStateChanged(function(currentUser){
     if(currentUser){
-      console.log(currentUser);
+      findData(currentUser);
       dbChatRoom.limitToLast(10).on('child_added', function (snapshot) {
         //GET DATA
 
@@ -170,23 +181,22 @@ $(document).ready(function(){
         var message = data.text;
         var imageUrl = data.imageUrl;
         var userProfile = [];
-        var dbUserInfo = firebase.database().ref('user/' + currentUser.uid);
+        // var dbUserInfo = firebase.database().ref('user/' + currentUser.uid);
+        //
+        // dbUserInfo.on("value", function(snapshot){
+        //   var username = snapshot.val().username;
+        //   var occupation = snapshot.val().occupation;
+        //   var age = snapshot.val().age;
+        //   var description = snapshot.val().description;
+        //   $profileName.html(username);
+        //   $profileEmail.html(currentUser.email);
+        //   $profileOccupation.html(occupation);
+        //   $profileAge.html(age);
+        //   $profileDescription.html(description);
+        //   $img.attr("src",currentUser.photoURL);
+        // });
+        findData(currentUser);
 
-        dbUserInfo.on("value", function(snapshot){
-          var username = snapshot.val().username;
-          var occupation = snapshot.val().occupation;
-          var age = snapshot.val().age;
-          var description = snapshot.val().description;
-          $profileName.html(username);
-          $profileEmail.html(currentUser.email);
-          $profileOccupation.html(occupation);
-          $profileAge.html(age);
-          $profileDescription.html(description);
-          $img.attr("src",currentUser.photoURL);
-
-        //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
-
-        });
         var $messageElement = $("<li>");
         var $image = $("<img>");
         $image.attr("src", imageUrl);
@@ -206,14 +216,14 @@ $(document).ready(function(){
     var userName;
 
     if(currentUser){
-      console.log(currentUser.uid);
+      //console.log(currentUser.uid);
       dbUserInfo.on("value",function(snapshot) {
-         console.log(snapshot.val());
+         //console.log(snapshot.val());
          snapshot.forEach(function(userId){
-            console.log(userId.key);
+            //console.log(userId.key);
             if(userId.key === currentUser.uid){
               userId.forEach(function(profile){
-                console.log(profile.key + ": " + profile.val());
+                //console.log(profile.key + ": " + profile.val());
                 if(profile.key === 'username'){
                     userName = profile.val();
                 }
@@ -224,9 +234,9 @@ $(document).ready(function(){
 
       if (e.keyCode == 13) {//When the user presses the "enter" key
         var message = $messageField.val();
-        console.log(userName);
-        console.log(message);
-        console.log(currentUser.photoURL);
+        //console.log(userName);
+        //console.log(message);
+        //console.log(currentUser.photoURL);
 
         dbChatRoom.push({user:userName, text:message, imageUrl:currentUser.photoURL});
         $messageField.val('');
@@ -238,6 +248,7 @@ $(document).ready(function(){
 
   $removeData.click(function(){
     dbChatRoom.remove().then(function() {
+      $messageList.empty();
       alert("Remove succeeded")
     });
   });
