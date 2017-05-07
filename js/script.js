@@ -208,9 +208,9 @@ $(document).ready(function(){
         $messageElement.prepend($image);
 
         //ADD MESSAGE
-        //if(username !== 'anonymous'){
+        if(username !== 'anonymous'){
           $messageList.append($messageElement);
-        //}
+        }
         $messageList[0].scrollTop = $messageList[0].scrollHeight;
       });
     }
