@@ -161,13 +161,14 @@ $(document).ready(function(){
       var occupation = snapshot.val().occupation;
       var age = snapshot.val().age;
       var description = snapshot.val().description;
+      var imageUrl = snapshot.val().imageUrl;
 
       $profileName.html(username);
       $profileEmail.html(currentUser.email);
       $profileOccupation.html(occupation);
       $profileAge.html(age);
       $profileDescription.html(description);
-      $img.attr("src",currentUser.photoURL);
+      $img.attr("src", imageUrl);
 
       //$img.attr("src", photoURL);
     });
@@ -208,9 +209,9 @@ $(document).ready(function(){
         $messageElement.prepend($image);
 
         //ADD MESSAGE
-        if(username !== 'anonymous'){
+        //if(username !== 'anonymous'){
           $messageList.append($messageElement);
-        }
+        //}
         $messageList[0].scrollTop = $messageList[0].scrollHeight;
       });
     }
