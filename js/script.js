@@ -124,7 +124,8 @@ $(document).ready(function(){
           'username': userName,
           'occupation': occupation,
           'age': age,
-          'description': description
+          'description': description,
+          'imageUrl': currentUser.photoURL
         });
 
         findData(currentUser);
@@ -167,8 +168,6 @@ $(document).ready(function(){
       $profileAge.html(age);
       $profileDescription.html(description);
       $img.attr("src",currentUser.photoURL);
-      dbChatRoom.update({imageUrl:currentUser.photoURL});
-
 
       //$img.attr("src", photoURL);
     });
@@ -183,8 +182,8 @@ $(document).ready(function(){
         var data = snapshot.val();
         var username = data.user || "anonymous";
         var message = data.text;
-        var imageUrl = data.imageUrl;
-        var userProfile = [];
+        var imgUrl = data.imageUrl;
+        console.log(imgUrl);
         // var dbUserInfo = firebase.database().ref('user/' + currentUser.uid);
         //
         // dbUserInfo.on("value", function(snapshot){
@@ -204,14 +203,14 @@ $(document).ready(function(){
 
         var $messageElement = $("<li>");
         var $image = $("<img>");
-        $image.attr("src", imageUrl);
+        $image.attr("src", imgUrl);
         $messageElement.text(message).prepend(username + ":  ");
         $messageElement.prepend($image);
 
         //ADD MESSAGE
-        if(username !== 'anonymous'){
+        //if(username !== 'anonymous'){
           $messageList.append($messageElement);
-        }
+        //}
         $messageList[0].scrollTop = $messageList[0].scrollHeight;
       });
     }
@@ -245,7 +244,7 @@ $(document).ready(function(){
         //console.log(message);
         //console.log(currentUser.photoURL);
 
-        dbChatRoom.push({user:userName, text:message, imageUrl:currentUser.photoURL});
+        dbChatRoom.push({user:userName, text:message, imageUrl: currentUser.photoURL});
         $messageField.val('');
       }
     }
@@ -254,8 +253,8 @@ $(document).ready(function(){
   });
 
   $removeData.click(function(){
+    $messageList.empty();
     dbChatRoom.remove().then(function() {
-      $messageList.empty();
       alert("Remove succeeded")
     });
   });
