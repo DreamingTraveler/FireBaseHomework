@@ -167,6 +167,9 @@ $(document).ready(function(){
       $profileAge.html(age);
       $profileDescription.html(description);
       $img.attr("src",currentUser.photoURL);
+      dbChatRoom.update({imageUrl:currentUser.photoURL});
+
+
       //$img.attr("src", photoURL);
     });
   }
@@ -198,6 +201,7 @@ $(document).ready(function(){
         // });
         findData(currentUser);
 
+
         var $messageElement = $("<li>");
         var $image = $("<img>");
         $image.attr("src", imageUrl);
@@ -205,7 +209,9 @@ $(document).ready(function(){
         $messageElement.prepend($image);
 
         //ADD MESSAGE
-        $messageList.append($messageElement);
+        if(username !== 'anonymous'){
+          $messageList.append($messageElement);
+        }
         $messageList[0].scrollTop = $messageList[0].scrollHeight;
       });
     }
